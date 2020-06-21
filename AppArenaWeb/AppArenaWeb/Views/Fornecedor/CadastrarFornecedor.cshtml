@@ -1,0 +1,137 @@
+﻿@model FornecedorModel
+
+
+<h3>Cadastrar Fornecedor</h3>
+
+@{
+
+    var vNome = "";
+    var vAtividade = "";
+    var vRua = "";
+    var vNumero = "";
+    var vComplemento = "";
+    var vBairro = "";
+    var vCidade = "";
+    var vUF = "";
+    var vEmail = "";
+    var vTelefone = "";
+    var vCelular = "";
+    var vCelular2 = "";
+    var vObs = "";
+
+
+    try
+    {
+
+        vNome = @ViewBag.Registro.Nome.ToString();
+        vAtividade = @ViewBag.Registro.Atividade.ToString();
+        vRua = @ViewBag.Registro.Rua.ToString();
+        vNumero = @ViewBag.Registro.Numero.ToString();
+        vComplemento = @ViewBag.Registro.Complemento.ToString();
+        vBairro = @ViewBag.Registro.Bairro.ToString();
+        vCidade = @ViewBag.Registro.Cidade.ToString();
+        vUF = @ViewBag.Registro.UF.ToString();
+        vEmail = @ViewBag.Registro.Email.ToString();
+        vTelefone = @ViewBag.Registro.Telefone.ToString();
+        vCelular = @ViewBag.Registro.Celular.ToString();
+        vCelular2 = @ViewBag.Registro.Celular2.ToString();
+        vObs = @ViewBag.Registro.Obs.ToString();
+    }
+    catch { }
+}
+<br />
+
+<form asp-controller="Fornecedor" asp-action="CadastrarFornecedor">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Nome</label>
+            <input type="text" class="form-control" asp-for="Nome" value="@vNome">
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Atividade</label>
+            <input type="text" class="form-control" asp-for="Atividade" value="@vAtividade">
+            <span asp-validation-for="Atividade" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-9 col-sm-6 col-md-6">
+            <label>Rua</label>
+            <input type="text" class="form-control" asp-for="Rua" value="@vRua">
+            <span asp-validation-for="Rua" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-3 col-sm-2 col-md-2">
+            <label>Número</label>
+            <input type="text" class="form-control" asp-for="Numero" value="@vNumero">
+            <span asp-validation-for="Numero" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <label>Complemento</label>
+            <input type="text" class="form-control" asp-for="Complemento" value="@vComplemento">
+            <span asp-validation-for="Complemento" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5 col-sm-5 col-md-4">
+            <label>Bairro</label>
+            <input type="text" class="form-control" asp-for="Bairro" value="@vBairro">
+            <span asp-validation-for="Bairro" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-5 col-sm-5 col-md-4">
+            <label>Cidade</label>
+            <input type="text" class="form-control" asp-for="Cidade" value="@vCidade">
+            <span asp-validation-for="Cidade" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-2 col-sm-2 col-md-4">
+            <label>UF</label>
+            <input type="tel" class="form-control" asp-for="UF" value="@vUF">
+            <span asp-validation-for="UF" class="text-danger"></span>
+        </div>        
+    </div>
+
+    <div class="row">        
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>Telefone</label>
+            <input type="tel" class="form-control" asp-for="Telefone" value="@vTelefone">
+            <span asp-validation-for="Telefone" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>Celular</label>
+            <input type="tel" class="form-control" asp-for="Celular" value="@vCelular">
+            <span asp-validation-for="Celular" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>Celular2</label>
+            <input type="tel" class="form-control" asp-for="Celular2" value="@vCelular2">
+            <span asp-validation-for="Celular2" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <label>Email</label>
+            <input type="tel" class="form-control" asp-for="Email" value="@vEmail">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            <label>Obs</label>
+            <input type="tel" class="form-control" asp-for="Obs" value="@vObs">
+            <span asp-validation-for="Obs" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+</form>
+
+
+
+

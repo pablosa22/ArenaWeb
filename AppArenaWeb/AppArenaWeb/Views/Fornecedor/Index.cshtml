@@ -1,0 +1,78 @@
+﻿@model FornecedorModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Pesquisar Fornecedor</h3>
+<br />
+
+@{
+    var vNome = "";
+    var vAtividade = "";
+
+
+    try
+    {
+
+    }
+    catch { }
+}
+
+<form asp-controller="Fornecedor" asp-action="Index">
+    <div class="row">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <label for="sel">Nome</label>
+            <input type="text" class="form-control" asp-for="Nome" value="@vNome">
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <label for="sel">Atividade</label>
+            <input type="text" class="form-control" asp-for="Atividade" value="@vAtividade">
+        </div>
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <br />
+            <button type="submit" class="btn btn-block btn-primary">Pesquisar</button>
+        </div>
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <br />
+            <button type="button" class="btn btn-block btn-success" onclick="CriarFornecedor()"><strong> + </strong>Novo</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Atividade</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<FornecedorModel>)ViewBag.ListaFornecedores)
+        {
+            <tbody>
+                <tb>
+                    <tr>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Nome.ToString()</td>
+                        <td>@item.Atividade.ToString()</td>
+                        <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarFornecedor(@item.Id.ToString())">Editar</button></td>
+                    </tr>
+                </tb>
+            </tbody>
+        }
+    }
+</table>
+
+<script type="text/javascript" src="~/Scripts/jquery.mask.js"></script>
+<script>
+    function CriarFornecedor() {
+        window.location.href = "../Fornecedor/CadastrarFornecedor";
+    }
+
+    function EditarFornecedor(Id) {
+        window.location.href = "../Fornecedor/CadastrarFornecedor/" + Id;
+    }    
+</script>
+
