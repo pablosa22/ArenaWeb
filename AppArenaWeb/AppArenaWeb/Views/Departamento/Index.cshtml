@@ -1,0 +1,90 @@
+﻿@model DepartamentoModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Pesquisar Departamento</h3>
+<br />
+
+@{
+
+    var vDescricao = "";
+    var vStatus = "";
+
+    try
+    {
+        vDescricao = @ViewBag.Departamento.Descricao.ToString();
+        vStatus = @ViewBag.Departamento.Status.ToString();
+    }
+    catch { }
+}
+
+<form asp-controller="Departamento" asp-action="Index">
+    <div class="row">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <label for="sel">Descrição</label>
+            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
+        </div>
+
+        <div class="form-group">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <label>Situação</label>
+                <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" checked />Ativo</label></div>
+                <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" unchecked />Inativo</label></div>
+            </div>
+        </div>
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <br />
+            <button type="submit" class="btn btn-block btn-primary">Pesquisar</button>
+        </div>
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <br />
+            <button type="button" class="btn btn-block btn-success" onclick="CadastrarDepartamento()"><strong> + </strong>Novo</button>
+        </div>
+    </div>
+</form>
+<br />
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Situação</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<DepartamentoModel>)ViewBag.ListaDepartamentos)
+        {
+            <tbody>
+                <tb>
+                    <tr>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Descricao.ToString()</td>
+                        <td>@item.Status.ToString()</td>
+                        <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarDepartamento(@item.Id.ToString())">Editar</button></td>
+                    </tr>
+                </tb>
+            </tbody>
+        }
+    }
+</table>
+
+<script type="text/javascript" src="~/Scripts/jquery.mask.js"></script>
+<script>
+
+    function CadastrarDepartamento() {
+        window.location.href = "../Departamento/CadastrarDepartamento";
+    }
+
+    function EditarDepartamento(Id) {
+        window.location.href = "../Departamento/CadastrarDepartamento/" + Id;
+    }   
+
+</script>
+
+
+
+
+

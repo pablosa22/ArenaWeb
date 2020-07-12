@@ -1,0 +1,46 @@
+﻿@model DepartamentoModel
+
+<h3>Cadastrar Departamento</h3>
+
+@{
+    var vDescricao = "";
+    var vStatus = "";
+
+    try
+    {
+
+        vDescricao = @ViewBag.Registro.Descricao.ToString();
+        vStatus = @ViewBag.Registro.Status.ToString();
+    }
+    catch { }
+}
+<br />
+
+<form asp-controller="Departamento" asp-action="CadastrarDepartamento">
+    <div class="row">
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <label>Descrição</label>
+            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div class="col-4 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+                <label>Situação</label>
+                @{
+                    if (vStatus == "ATIVO")
+                    {
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" checked />Ativo</label></div>
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" unchecked />Inativo</label></div>
+                    }
+                    else
+                    {
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" unchecked />Ativo</label></div>
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" checked />Inativo</label></div>
+                    }
+                }
+            </div>
+        </div>
+    </div><br />
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+</form>
