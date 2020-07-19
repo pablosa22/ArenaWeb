@@ -1,5 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProdutoModel
+
+<h3>Cadastrar Produto</h3>
+
+
 @{
+    var vDescricao = "";
+    var vDimensao = "";
+    var vIdade_Maxima = 0;
+    var vId_Departamento = 0;
+    var vId_Fornecedor = 0;
+    var vStatus = "";
+    var vObs = "";
+
+    try
+    {
+        vDescricao = @ViewBag.Produto.Descricao.ToString();
+        vDimensao = @ViewBag.Produto.Dimensao.ToString();
+        vIdade_Maxima = @ViewBag.Produto.Idade_Maxima.ToString();
+        vId_Departamento = @ViewBag.Produto.Id_Departamento.ToString();
+        vId_Fornecedor = @ViewBag.Produto.Id_Fornecedor.ToString();
+        vStatus = @ViewBag.Produto.Status.ToString();
+        vObs = @ViewBag.Produto.Obs.ToString();
+    }
+    catch { }
+
 }

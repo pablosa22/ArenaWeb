@@ -1,5 +1,94 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProdutoModel
+
+<h3>Pesquisar Produto</h3>
+<br />
+
 @{
+    var vId = 0;
+    var vDescricao = "";
+    var vDepartamento = "";
+    var vDepartamento_Id = 0;
+
+    try
+    {
+        vId = int.Parse(@ViewBag.ListaProdutos.Id.ToString());
+        vDescricao = @ViewBag.ListaProdutos.Descricao.ToString();
+        vDepartamento_Id = int.Parse(@ViewBag.ListaDepartamentos.Id.ToString());
+        vDepartamento = @ViewBag.ListaDepartamentos.Descricao.ToString();
+    }
+    catch { }
 }
+
+<form asp-controller="Produto" asp-action="Index">
+    <div class="row">
+        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+            <label for="sel">Id</label>
+            <input type="text" class="form-control" asp-for="Id" value="@vId">
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <label for="sel">Descrição</label>
+            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
+        </div>    
+        
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <label>Departamento</label>
+            <select asp-for="Id_Departamento" class="form-control">
+                @{
+                    <option value="0">Todos os Departamentos</option>
+                    foreach (var item in (List<DepartamentoModel>)ViewBag.ListaDepartamentos)
+                    {
+                        if (item.Id.ToString() == vDepartamento_Id.ToString())
+                        {
+                            <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+        </div>           
+        
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <br />
+            <button type="submit" class="btn btn-block btn-primary">Pesquisar</button>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <br />
+            <button type="button" class="btn btn-block btn-success" onclick="CadastrarProduto()"><strong> + </strong>Novo</button>
+        </div>
+    </div>
+</form>
+<br />
+
+<table class="table table-sm ">
+    <thead >
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>CPF</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<ProdutoModel>)ViewBag.ListaProdutos)
+        {
+            foreach (var dep in (List<DepartamentoModel>)ViewBag.ListaDepartamentos)
+            {
+                if (item.Id_Departamento.ToString() == dep.Id.ToString()) 
+                { 
+                    <tbody style="font-size: 12px;">
+                        <tb>
+                           <tr>
+                              <td>@item.Id.ToString()</td>
+                              <td>@item.Descricao.ToString()</td>
+                              <td>@dep.Descricao.ToString()</td>
+                              <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarProduto(@item.Id.ToString())">Editar</button></td>
+                           </tr>
+                        </tb>
+                    </tbody>                
+                }
+            }
+        }
+     }
+</table>
