@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppArenaWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AppArenaWeb.Controllers
 {
@@ -14,15 +15,20 @@ namespace AppArenaWeb.Controllers
         public IActionResult Index(ProdutoModel formulario)
         {         
             ProdutoModel objProduto = new ProdutoModel();
+            ViewBag.ListaProdutos = objProduto.ListaProdutos();
+            ViewBag.ListaProdutos = formulario.ListaProdutos();            
+            
             DepartamentoModel objDepartamento = new DepartamentoModel();
             ViewBag.ListaDepartamentos = objDepartamento.ListaDepartamentos();
-            ViewBag.ListaProdutos = objProduto.ListaProdutos();
-            ViewBag.ListaProdutos = formulario.ListaProdutos();
+            
+            FornecedorModel objFornecedor = new FornecedorModel();
+            ViewBag.ListaFornecedores = objFornecedor.ListaFornecedores();
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult CadastrarProdutos(ProdutoModel formulario)
+        public IActionResult CadastrarProduto(ProdutoModel formulario)
         {
             if (ModelState.IsValid)
             {
@@ -34,13 +40,14 @@ namespace AppArenaWeb.Controllers
 
         [HttpGet]
         public IActionResult CadastrarProduto(int? Id)
-        {
+        {            
             if (Id != null)
-            {
+            {                
                 ProdutoModel objProduto = new ProdutoModel();
-                ViewBag.Registro = objProduto.CarregarRegistro(Id);             
+                ViewBag.Registro = objProduto.CarregarRegistro(Id);                         
             }
             ViewBag.ListaDepartamentos = new DepartamentoModel().ListaDepartamentos();
+            ViewBag.ListaFornecedores = new FornecedorModel().ListaFornecedores();
             return View();
         }
     }

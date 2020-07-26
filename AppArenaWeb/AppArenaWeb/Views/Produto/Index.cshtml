@@ -28,8 +28,8 @@
         <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <label for="sel">Descrição</label>
             <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
-        </div>    
-        
+        </div>
+
         <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
             <label>Departamento</label>
             <select asp-for="Id_Departamento" class="form-control">
@@ -48,8 +48,8 @@
                     }
                 }
             </select>
-        </div>           
-        
+        </div>
+
         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <br />
             <button type="submit" class="btn btn-block btn-primary">Pesquisar</button>
@@ -63,7 +63,7 @@
 <br />
 
 <table class="table table-sm ">
-    <thead >
+    <thead>
         <tr>
             <th>ID</th>
             <th>Descrição</th>
@@ -75,20 +75,37 @@
         {
             foreach (var dep in (List<DepartamentoModel>)ViewBag.ListaDepartamentos)
             {
-                if (item.Id_Departamento.ToString() == dep.Id.ToString()) 
-                { 
+                if (item.Id_Departamento.ToString() == dep.Id.ToString())
+                {
                     <tbody style="font-size: 12px;">
                         <tb>
-                           <tr>
-                              <td>@item.Id.ToString()</td>
-                              <td>@item.Descricao.ToString()</td>
-                              <td>@dep.Descricao.ToString()</td>
-                              <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarProduto(@item.Id.ToString())">Editar</button></td>
-                           </tr>
+                            <tr>
+                                <td>@item.Id.ToString()</td>
+                                <td>@item.Descricao.ToString()</td>
+                                <td>@dep.Descricao.ToString()</td>
+                                <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarProduto(@item.Id.ToString())">Editar</button></td>
+                            </tr>
                         </tb>
-                    </tbody>                
+                    </tbody>
+
                 }
             }
         }
-     }
+    }
 </table>
+
+<script type="text/javascript" src="~/Scripts/jquery.mask.js"></script>
+<script>
+
+    function CadastrarProduto() {
+        window.location.href = "../Produto/CadastrarProduto";
+    }
+
+    function EditarProduto(Id) {
+        window.location.href = "../Produto/CadastrarProduto/" + Id;
+    }
+
+</script>
+
+
+

@@ -18,7 +18,11 @@ namespace AppArenaWeb.Models
         [Required(ErrorMessage = "Informe a Dimenção maior que 3 e menor que 20!")]
         public string Dimensao { get; set; }
         public int IdadeMaxima { get; set; }
+        [Range(1, 1000)]
+        [Required(ErrorMessage = "Informe o Departamento")]
         public int Id_Departamento { get; set; }
+        [Range(1, 1000)]        
+        [Required(ErrorMessage = "Informe o Fornecedor")]
         public int Id_Fornecedor { get; set; }
         public string Status { get; set; }        
         public string Obs { get; set; }

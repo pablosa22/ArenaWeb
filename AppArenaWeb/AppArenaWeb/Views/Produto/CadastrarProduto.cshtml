@@ -1,27 +1,119 @@
 ﻿@model ProdutoModel
 
 <h3>Cadastrar Produto</h3>
+<br />
 
-
-@{
+@{    
     var vDescricao = "";
     var vDimensao = "";
     var vIdade_Maxima = 0;
-    var vId_Departamento = 0;
-    var vId_Fornecedor = 0;
+    var vDepartamento_Id = 0;
+    var vFornecedor_Id = 0;
     var vStatus = "";
     var vObs = "";
 
     try
     {
-        vDescricao = @ViewBag.Produto.Descricao.ToString();
-        vDimensao = @ViewBag.Produto.Dimensao.ToString();
-        vIdade_Maxima = @ViewBag.Produto.Idade_Maxima.ToString();
-        vId_Departamento = @ViewBag.Produto.Id_Departamento.ToString();
-        vId_Fornecedor = @ViewBag.Produto.Id_Fornecedor.ToString();
-        vStatus = @ViewBag.Produto.Status.ToString();
-        vObs = @ViewBag.Produto.Obs.ToString();
+        vDescricao = @ViewBag.Registro.Descricao.ToString();
+        vDimensao = @ViewBag.Registro.Dimensao.ToString();
+        vIdade_Maxima = int.Parse(@ViewBag.Registro.IdadeMaxima.ToString());        
+        vFornecedor_Id = int.Parse(@ViewBag.Registro.Id_Fornecedor.ToString());
+        vDepartamento_Id = int.Parse(@ViewBag.Registro.Id_Departamento.ToString());
+        vStatus = @ViewBag.Registro.Status.ToString();
+        vObs = @ViewBag.Registro.Obs.ToString();
     }
     catch { }
-
 }
+
+<form asp-controller="Produto" asp-action="CadastrarProduto">   
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <label>Descrição</label>
+            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <label>Dimensão Ex:AxLxC </label>
+            <input type="text" class="form-control" asp-for="Dimensao" value="@vDimensao">
+            <span asp-validation-for="Dimensao" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 col-md-2">
+            <label>Idade Máxima</label>            
+            <input type="text" class="form-control" asp-for="IdadeMaxima" value="@vIdade_Maxima">                               
+            <span asp-validation-for="IdadeMaxima" class="text-danger"></span>
+        </div>
+        </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <label>Fornecedor</label>
+            <select asp-for="Id_Fornecedor" class="form-control">
+                @{
+                    <option value="0">- Selecione o Fornecedor -</option>
+
+                    foreach (var fornc in (List<FornecedorModel>)ViewBag.ListaFornecedores)
+                    {
+                        if (fornc.Id.ToString() == vFornecedor_Id.ToString())
+                        {
+                            <option selected value="@fornc.Id.ToString()">@fornc.Nome.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@fornc.Id.ToString()">@fornc.Nome.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="Id_Fornecedor" class="text-danger"></span>
+        </div>
+
+        <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <label>Departamento</label>
+            <select asp-for="Id_Departamento" class="form-control">
+                @{
+                    <option value="0">- Selecione o Departamento -</option>
+                    foreach (var item in (List<DepartamentoModel>)ViewBag.ListaDepartamentos)
+                    {
+                        if (item.Id.ToString() == vDepartamento_Id.ToString())
+                        {
+                            <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="Id_Departamento" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <label>Situação</label>
+                @{
+                    if (vStatus == "ATIVO")
+                    {
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" checked />Ativo</label></div>
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" unchecked />Inativo</label></div>
+                    }
+                    else
+                    {
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" unchecked />Ativo</label></div>
+                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" checked />Inativo</label></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <label>Obs</label>
+            <textarea asp-for="@vObs" class="form-control" rows="3" cols="40"></textarea>            
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+</form>
