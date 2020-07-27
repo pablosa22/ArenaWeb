@@ -1,0 +1,94 @@
+﻿@model AgendacModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Pesquisar Agenda</h3>
+<br />
+
+@{
+
+    var vId = "";
+    var vId_Cliente = "";
+    var vCliente = "";
+    var vPedido = 1;
+    var vDtInicial = "";
+    var vDtFinal = "";
+
+    try
+    {
+        vId = @ViewBag.Agenda.Id.ToString();
+        vId_Cliente = @ViewBag.Agenda.Id_Cliente.ToString();
+        vCliente = ViewBag.Agenda.Cliente.ToString();
+        vPedido = ViewBag.Agenda.Pedido.ToString();
+        vDtInicial = ViewBag.Agenda.DtInicial.ToString();
+        vDtFinal = ViewBag.Agenda.DtFinal.ToString();
+
+    }
+    catch { }
+}
+
+<form asp-controller="Agenda" asp-action="Index">
+    <div class="row">
+        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+            <label for="sel">O.S.</label>
+            <input type="text" class="form-control" asp-for="Id" value="@vId">
+        </div>
+        <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+            <label for="sel">Cód.Cli</label>
+            <input type="text" class="form-control" asp-for="Id_Clinte" value="@vId_Cliente">
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <label for="sel">DtInicio</label>
+            <input type="date" placeholder="01/01/2000" class="form-control" asp-for="DtInicial" value="@vDtInicial">
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <label for="sel">DtFim</label>
+            <input type="date" placeholder="28/02/2000" class="form-control" asp-for="DtFinal" value="@vDtFinal">
+        </div>
+        <div class="form-group">
+            <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <label>Tipo</label>
+                <div class="radio"><label><input type="radio" asp-for="Pedido" value=1 checked />Pedido</label></div>
+                <div class="radio"><label><input type="radio" asp-for="Pedido" value=2 unchecked />Orçamento</label></div>
+            </div>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <br />
+            <button type="submit" class="btn btn-block btn-primary">Pesquisar</button>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <br />
+            <button type="button" class="btn btn-block btn-success" onclick="CadastrarCliente()"><strong> + </strong>Novo</button>
+        </div>
+    </div>
+</form>
+<br />
+
+<table class="table table-sm" >
+    <thead>
+        <tr>
+            <th>O.S.</th>
+            <th>Cliente</th>
+            <th>Inicio</th>
+            <th>Fim</th>
+        </tr>
+    </thead>
+    @{
+        foreach (var item in (List<AgendacModel>)ViewBag.ListaAgendac)
+        {
+            <tbody style="font-size: 11px;">
+                <tb>
+                        <tr>
+                            <td>@item.Id.ToString()</td>
+                            <td>@item.Cliente.ToString()</td>
+                            <td>@item.DtInicial.ToString()</td>
+                            <td>@item.DtFinal.ToString()</td>
+                            <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarCliente(@item.Id.ToString())">Editar</button></td>
+                        </tr>
+                </tb>
+            </tbody>
+        }
+    }
+</table>
