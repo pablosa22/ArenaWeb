@@ -1,0 +1,77 @@
+﻿@model AgendacModel 
+
+
+<h3>Agendar Festa / Orçamento</h3>
+
+@{
+    var vId = 0;
+    var vTipo = "";
+    var vId_Cliente = "";
+    var vCliente = "";
+    var vPedido = 1;
+    var vDtInicial = "";
+    var vDtFinal = "";
+    var vVlTotal = 0.00;
+    var vVlDesconto = 0.00;
+    var vVlPago = 0.00;
+    var vVlRestante = 0.00;
+    var vObs = "";
+
+    var vId_AgendaI = 0;
+    var vId_Produto = "";
+    var vDescricao = "";
+    var vQtde = 0;
+    var vPunit = 0.00;
+    var vVlDescontoI = 0.00;
+
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Agenda.Id.ToString());
+        vTipo = @ViewBag.Agenda.Tipo.ToString();
+        vId_Cliente = int.Parse(@ViewBag.Agenda.Id_Cliente.ToString());
+        vCliente = ViewBag.Agenda.Cliente.ToString();
+        vPedido = int.Parse(ViewBag.Agenda.Pedido.ToString());
+        vDtInicial = ViewBag.Agenda.DtInicial.ToString();
+        vDtFinal = ViewBag.Agenda.DtFinal.ToString();
+        vVlTotal = decimal.Parse(ViewBag.Agenda.VlTotal.ToString());
+        vVlDesconto = decimal.Parse(ViewBag.Agenda.VlDesconto.ToString());
+        vVlPago = decimal.Parse(ViewBag.Agenda.VlPago.ToString());
+        vVlRestante = decimal.Parse(ViewBag.Agenda.VlRestante.ToString());
+        vObs = ViewBag.Agenda.Obs.ToString();
+
+        vId_AgendaI = int.Parse(@ViewBag.Agenda.Id_AgendaI.ToString());
+        vId_Produto = int.Parse(@ViewBag.Agenda.Id_Produto.ToString());
+        vDescricao = @ViewBag.Agenda.Descricao.ToString();
+        vQtde = int.Parse(ViewBag.Agenda.Qtde.ToString());
+        vPunit = decimal.Parse(ViewBag.Agenda.Punit.ToString());
+        vVlDescontoI = decimal.Parse(ViewBag.Agenda.VlDescontoI.ToString());
+
+    }
+    catch { }
+}
+
+<form asp-controller="Agenda" asp-action="Agendar">
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2">
+            <label>Id</label>
+            <input type="text" class="form-control" asp-for="Id" value="@vId">
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2">
+            <label>Id_Cliente</label>
+            <input type="text" class="form-control" asp-for="Id_Clinte" value="@vId_Cliente">
+            <span asp-validation-for="Id_Clinte" class="text-danger"></span>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>Cliente</label>
+            <input type="text" class="form-control" asp-for="Cliente" value="@vCliente">
+            <span asp-validation-for="Cliente" class="text-danger"></span>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>Produto</label>
+            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+    </div>
+</form>

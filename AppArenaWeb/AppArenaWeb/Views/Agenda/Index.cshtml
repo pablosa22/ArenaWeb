@@ -1,16 +1,14 @@
 ﻿@model AgendacModel
 
-@{
-    ViewData["Title"] = "Index";
+@{ 
+ViewData["Title"] = "Index";
 }
 
 <h3>Pesquisar Agenda</h3>
 <br />
-
 @{
-
-    var vId = "";
-    var vId_Cliente = "";
+    var vId = 0;
+    var vId_Cliente = 0;
     var vCliente = "";
     var vPedido = 1;
     var vDtInicial = "";
@@ -18,13 +16,12 @@
 
     try
     {
-        vId = @ViewBag.Agenda.Id.ToString();
-        vId_Cliente = @ViewBag.Agenda.Id_Cliente.ToString();
-        vCliente = ViewBag.Agenda.Cliente.ToString();
-        vPedido = ViewBag.Agenda.Pedido.ToString();
-        vDtInicial = ViewBag.Agenda.DtInicial.ToString();
-        vDtFinal = ViewBag.Agenda.DtFinal.ToString();
-
+        vId = int.Parse(@ViewBag.ListaAgendac.Id.ToString());
+        vId_Cliente = int.Parse(@ViewBag.ListaAgendac.Id_Cliente.ToString());
+        vCliente = @ViewBag.ListaAgendac.Cliente.ToString();
+        vPedido = int.Parse(ViewBag.ListaAgendac.Pedido.ToString());
+        vDtInicial = ViewBag.ListaAgendac.DtInicial.ToString();
+        vDtFinal = ViewBag.ListaAgendac.DtFinal.ToString();
     }
     catch { }
 }
@@ -60,13 +57,13 @@
         </div>
         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <br />
-            <button type="button" class="btn btn-block btn-success" onclick="CadastrarCliente()"><strong> + </strong>Novo</button>
+            <button type="button" class="btn btn-block btn-success" onclick="Agendar()"><strong> + </strong>Novo</button>
         </div>
     </div>
 </form>
 <br />
 
-<table class="table table-sm" >
+<table class="table table-sm">
     <thead>
         <tr>
             <th>O.S.</th>
@@ -80,15 +77,30 @@
         {
             <tbody style="font-size: 11px;">
                 <tb>
-                        <tr>
-                            <td>@item.Id.ToString()</td>
-                            <td>@item.Cliente.ToString()</td>
-                            <td>@item.DtInicial.ToString()</td>
-                            <td>@item.DtFinal.ToString()</td>
-                            <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarCliente(@item.Id.ToString())">Editar</button></td>
-                        </tr>
+                    <tr>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Cliente.ToString()</td>
+                        <td>@item.DtInicial.ToString()</td>
+                        <td>@item.DtFinal.ToString()</td>
+                        <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarCliente(@item.Id.ToString())">Editar</button></td>
+                    </tr>
                 </tb>
             </tbody>
         }
     }
 </table>
+
+<script type="text/javascript" src="~/Scripts/jquery.mask.js"></script>
+<script>
+    function Agendar() {
+        window.location.href = "../Agenda/CadastrarFesta";
+    }
+
+    function EditarCliente(Id) {
+        window.location.href = "../Cliente/CadastrarCliente/" + Id;
+    }
+
+    function Excluir(Id) {
+        window.location.href = "../PlanoConta/ExcluirPlanoConta/" + Id;
+    }
+</script>

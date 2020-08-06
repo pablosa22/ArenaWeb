@@ -12,10 +12,13 @@ namespace AppArenaWeb.Controllers
         [HttpGet]
         [HttpPost]
         public IActionResult Index(AgendacModel formulario)
-        {
-            AgendacModel objAgendac = new AgendacModel();
-            ViewBag.ListaAgendac = objAgendac.ListaAgendac();
+        {            
+            AgendacModel objAgenda = new AgendacModel();
+            ViewBag.ListaAgendac = objAgenda.ListaAgendac();
             ViewBag.ListaAgendac = formulario.ListaAgendac();
+
+           
+
             return View();
         }
     }
