@@ -6,72 +6,172 @@
 @{
     var vId = 0;
     var vTipo = "";
-    var vId_Cliente = "";
+    var vId_Cliente = 0;
     var vCliente = "";
     var vPedido = 1;
     var vDtInicial = "";
     var vDtFinal = "";
-    var vVlTotal = 0.00;
-    var vVlDesconto = 0.00;
-    var vVlPago = 0.00;
-    var vVlRestante = 0.00;
+    var vVlTotal = "";
+    var vVlDesconto = "";
+    var vVlPago ="";
+    var vVlRestante = "";
     var vObs = "";
-
-    var vId_AgendaI = 0;
-    var vId_Produto = "";
+   
     var vDescricao = "";
     var vQtde = 0;
-    var vPunit = 0.00;
-    var vVlDescontoI = 0.00;
+    var vPunit = "";
+    var vVlDescontoI = "";
 
 
     try
     {
-        vId = int.Parse(@ViewBag.Agenda.Id.ToString());
-        vTipo = @ViewBag.Agenda.Tipo.ToString();
-        vId_Cliente = int.Parse(@ViewBag.Agenda.Id_Cliente.ToString());
-        vCliente = ViewBag.Agenda.Cliente.ToString();
-        vPedido = int.Parse(ViewBag.Agenda.Pedido.ToString());
-        vDtInicial = ViewBag.Agenda.DtInicial.ToString();
-        vDtFinal = ViewBag.Agenda.DtFinal.ToString();
-        vVlTotal = decimal.Parse(ViewBag.Agenda.VlTotal.ToString());
-        vVlDesconto = decimal.Parse(ViewBag.Agenda.VlDesconto.ToString());
-        vVlPago = decimal.Parse(ViewBag.Agenda.VlPago.ToString());
-        vVlRestante = decimal.Parse(ViewBag.Agenda.VlRestante.ToString());
-        vObs = ViewBag.Agenda.Obs.ToString();
-
-        vId_AgendaI = int.Parse(@ViewBag.Agenda.Id_AgendaI.ToString());
-        vId_Produto = int.Parse(@ViewBag.Agenda.Id_Produto.ToString());
-        vDescricao = @ViewBag.Agenda.Descricao.ToString();
-        vQtde = int.Parse(ViewBag.Agenda.Qtde.ToString());
-        vPunit = decimal.Parse(ViewBag.Agenda.Punit.ToString());
-        vVlDescontoI = decimal.Parse(ViewBag.Agenda.VlDescontoI.ToString());
+        vId = int.Parse(@ViewBag.Registro.Id.ToString());
+        vTipo = @ViewBag.Registro.Tipo.ToString();
+        vId_Cliente = int.Parse(@ViewBag.Registro.Id_Cliente.ToString());
+        vCliente = ViewBag.Registro.Cliente.ToString();
+        vPedido = int.Parse(ViewBag.Registro.Pedido.ToString());
+        vDtInicial = ViewBag.Registro.DtInicial.ToString();
+        vDtFinal = ViewBag.Registro.DtFinal.ToString();
+        vVlTotal =  ViewBag.Registro.VlTotal.ToString();
+        vVlDesconto = ViewBag.Registro.VlDesconto.ToString();
+        vVlPago = ViewBag.Registro.VlPago.ToString();
+        vVlRestante = ViewBag.Registro.VlRestante.ToString();
+        vObs = ViewBag.Registro.Obs.ToString();
+        
+        vDescricao = @ViewBag.ListaAgendai.Descricao.ToString();
+        vQtde = int.Parse(ViewBag.ListaAgendai.Qtde.ToString());
+        vPunit = ViewBag.Agenda.ListaAgendai.ToString();
+        vVlDescontoI = ViewBag.ListaAgendai.VlDescontoI.ToString();
 
     }
     catch { }
 }
 
+
 <form asp-controller="Agenda" asp-action="Agendar">
     <div class="row">
-        <div class="col-xs-2 col-sm-2 col-md-2">
-            <label>Id</label>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <label>O.S</label>
             <input type="text" class="form-control" asp-for="Id" value="@vId">
             <span asp-validation-for="Id" class="text-danger"></span>
         </div>
-        <div class="col-xs-2 col-sm-2 col-md-2">
-            <label>Id_Cliente</label>
-            <input type="text" class="form-control" asp-for="Id_Clinte" value="@vId_Cliente">
-            <span asp-validation-for="Id_Clinte" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <label>Tipo</label>
+            <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
+            <span asp-validation-for="Tipo" class="text-danger"></span>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
-            <label>Cliente</label>
-            <input type="text" class="form-control" asp-for="Cliente" value="@vCliente">
-            <span asp-validation-for="Cliente" class="text-danger"></span>
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <label>Dt.Inicio</label>
+            <input type="text" class="form-control" asp-for="DtInicial" value="@vDtInicial">
+            <span asp-validation-for="DtInicial" class="text-danger"></span>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
-            <label>Produto</label>
-            <input type="text" class="form-control" asp-for="Descricao" value="@vDescricao">
-            <span asp-validation-for="Descricao" class="text-danger"></span>
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <label>Dt.Fim</label>
+            <input type="text" class="form-control" asp-for="DtFinal" value="@vDtFinal">
+            <span asp-validation-for="DtFinal" class="text-danger"></span>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <label>Cliente</label>
+            <select asp-for="Id_Cliente" class="form-control">
+                @{
+                    <option value="0">- Selecione o Cliente -</option>
+
+                    foreach (var cliente in (List<ClienteModel>)ViewBag.ListaClientes)
+                    {
+                        if (cliente.Id.ToString() == vId_Cliente.ToString())
+                        {
+                            <option selected value="@cliente.Id.ToString()">@cliente.Nome.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@cliente.Id.ToString()">@cliente.Nome.ToString()</option>
+                        }
+                    }
+                }
+            </select>
+            <span asp-validation-for="Id_Cliente" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3">
+            <label>Vl.Total</label>
+            <input type="text" class="form-control" asp-for="VlTotal" value="@vVlTotal">
+            <span asp-validation-for="VlTotal" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3">
+            <label>Vl.Desconto</label>
+            <input type="text" class="form-control" asp-for="VlDesconto" value="@vVlDesconto">
+            <span asp-validation-for="VlDesconto" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3">
+            <label>Vl.Pago</label>
+            <input type="text" class="form-control" asp-for="VlPago" value="@vVlPago">
+            <span asp-validation-for="VlPago" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3">
+            <label>Vl.Restante</label>
+            <input type="text" class="form-control" asp-for="VlRestante" value="@vVlRestante">
+            <span asp-validation-for="VlRestante" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <label>Obs</label>
+            <input type="text" class="form-control" asp-for="Obs" value="@vObs">
+            <span asp-validation-for="Obs" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="navbar-brand" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Itens</a>            
+            <a class="navbar-brand" id="nav-conferidos-tab" data-toggle="tab" href="#nav-conferidos" role="tab" aria-controls="nav-conferidos" aria-selected="false">|   Pesquisar </a>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table class="table table-sm"> 
+                <thead>
+                    <tr>
+                        <th>Descricao</th>
+                        <th>Qtde</th>
+                        <th>Punit</th>
+                        <th>Vl.Desc</th>
+                    </tr>
+                </thead>
+                @{
+                    foreach (var item in (List<AgendacModel>)ViewBag.ListaAgendai)
+                    {
+                        <tbody>
+                            <tb>
+                                <tr>
+                                    <td>@item.Descricao.ToString()</td>
+                                    <td>@item.Qtde.ToString()</td>
+                                    <td>@item.Punit.ToString()</td>
+                                    <td>@item.VlDescontoI.ToString()</td>
+                                    <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarFornecedor(@item.Id.ToString())">Editar</button></td>
+                                </tr>
+                            </tb>
+                        </tbody>
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="tab-pane fade" id="nav-conferidos" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <h4>teste</h4>
+        </div>
+    </div>
+
 </form>
+
+
+
+

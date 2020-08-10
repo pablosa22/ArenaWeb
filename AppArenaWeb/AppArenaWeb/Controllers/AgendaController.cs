@@ -17,8 +17,36 @@ namespace AppArenaWeb.Controllers
             ViewBag.ListaAgendac = objAgenda.ListaAgendac();
             ViewBag.ListaAgendac = formulario.ListaAgendac();
 
-           
+            ClienteModel objCliente = new ClienteModel();
+            ViewBag.ListaClientes = objCliente.ListaClientes();
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult Agendar(AgendacModel formulario) 
+        {
+            if (ModelState.IsValid)
+            {
+              //  formulario.Sql_Insert_update();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Agendar(int? Id)
+        {
+            if (Id != null)
+            {
+                AgendacModel objAgenda = new AgendacModel();
+                ViewBag.Registro = objAgenda.CarregarRegistro(Id);
+                ViewBag.ListaAgendai = objAgenda.ListaAgendai(Id);
+            }
+            else 
+            { 
+                ViewBag.ListaAgendai = new AgendacModel().ListaAgendai(0);            
+            }
+            ViewBag.ListaClientes = new ClienteModel().ListaClientes();          
             return View();
         }
     }

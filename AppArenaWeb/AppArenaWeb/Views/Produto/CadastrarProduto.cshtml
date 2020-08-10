@@ -9,6 +9,7 @@
     var vIdade_Maxima = 0;
     var vDepartamento_Id = 0;
     var vFornecedor_Id = 0;
+    var vValor = "";
     var vStatus = "";
     var vObs = "";
 
@@ -16,9 +17,10 @@
     {
         vDescricao = @ViewBag.Registro.Descricao.ToString();
         vDimensao = @ViewBag.Registro.Dimensao.ToString();
-        vIdade_Maxima = int.Parse(@ViewBag.Registro.IdadeMaxima.ToString());        
+        vIdade_Maxima = int.Parse(@ViewBag.Registro.IdadeMaxima.ToString());
         vFornecedor_Id = int.Parse(@ViewBag.Registro.Id_Fornecedor.ToString());
         vDepartamento_Id = int.Parse(@ViewBag.Registro.Id_Departamento.ToString());
+        vValor = @ViewBag.Registro.Valor.ToString();
         vStatus = @ViewBag.Registro.Status.ToString();
         vObs = @ViewBag.Registro.Obs.ToString();
     }
@@ -46,7 +48,7 @@
         </div>
 
     <div class="row">
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
             <label>Fornecedor</label>
             <select asp-for="Id_Fornecedor" class="form-control">
                 @{
@@ -89,31 +91,38 @@
             <span asp-validation-for="Id_Departamento" class="text-danger"></span>
         </div>
 
-        <div class="row">
-            <div class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                <label>Situação</label>
-                @{
-                    if (vStatus == "ATIVO")
-                    {
-                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" checked />Ativo</label></div>
-                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" unchecked />Inativo</label></div>
+        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <label>Valor</label>
+            <input type="text" class="form-control" asp-for="Valor" value="@vValor">
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
+
+
+            <div class="row">
+                <div class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <label>Situação</label>
+                    @{
+                        if (vStatus == "ATIVO")
+                        {
+                            <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" checked />Ativo</label></div>
+                            <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" unchecked />Inativo</label></div>
+                        }
+                        else
+                        {
+                            <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" unchecked />Ativo</label></div>
+                            <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" checked />Inativo</label></div>
+                        }
                     }
-                    else
-                    {
-                        <div class="radio"><label><input type="radio" asp-for="Status" value="ATIVO" unchecked />Ativo</label></div>
-                        <div class="radio"><label><input type="radio" asp-for="Status" value="INATIVO" checked />Inativo</label></div>
-                    }
-                }
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <label>Obs</label>
-            <textarea asp-for="@vObs" class="form-control" rows="3" cols="40"></textarea>            
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <label>Obs</label>
+                <textarea asp-for="@vObs" class="form-control" rows="3" cols="40"></textarea>
+            </div>
         </div>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+        <br />
+        <button type="submit" class="btn btn-block btn-success">Salvar</button>
 </form>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AppArenaWeb.Models
@@ -24,6 +25,8 @@ namespace AppArenaWeb.Models
         [Range(1, 1000)]        
         [Required(ErrorMessage = "Informe o Fornecedor")]
         public int Id_Fornecedor { get; set; }
+        [Required(ErrorMessage = "Informe o Valor")]
+        public decimal Valor { get; set; }
         public string Status { get; set; }        
         public string Obs { get; set; }
 
@@ -31,7 +34,6 @@ namespace AppArenaWeb.Models
         { 
 
         }
-
         public List<ProdutoModel> ListaProdutos() 
         {
             List<ProdutoModel> produtos = new List<ProdutoModel>();
@@ -41,35 +43,35 @@ namespace AppArenaWeb.Models
 
             if (Descricao != null && Id == 0 && Id_Departamento == 0)// Pesquisar por descricao
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' ORDER BY DESCRICAO ASC";
             }
             else if (Descricao == null && Id != 0 && Id_Departamento == 0)// Pesquisar pelo codigo
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
             }
             else if (Descricao != null && Id != 0 && Id_Departamento == 0)
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
             }
             else if (Id_Departamento != 0 && Descricao != null && Id == 0)
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' AND ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' AND ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
             }
             else if (Id_Departamento != 0 && Descricao == null && Id != 0)
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' AND ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' AND ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
             }
             else if (Id_Departamento != 0 && Descricao == null && Id == 0) 
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID_DEPARTAMENTO = '{Id_Departamento}' ORDER BY DESCRICAO ASC";
             }
             else if (Id_Departamento != 0 && Descricao != null && Id != 0)
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID_DEPARTAMENTO = '{Id_Departamento}' AND ID = '{Id}' AND DESCRICAO LIKE '%{Descricao}%'  ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID_DEPARTAMENTO = '{Id_Departamento}' AND ID = '{Id}' AND DESCRICAO LIKE '%{Descricao}%'  ORDER BY DESCRICAO ASC";
             }
             else
             {
-                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' ORDER BY DESCRICAO ASC";
+                sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE DESCRICAO LIKE '%{Descricao}%' ORDER BY DESCRICAO ASC";
             }
 
             DAL objDal = new DAL();
@@ -84,6 +86,7 @@ namespace AppArenaWeb.Models
                 item.IdadeMaxima = int.Parse(dt.Rows[i]["IDADE_MAXIMA"].ToString());
                 item.Id_Departamento = int.Parse(dt.Rows[i]["ID_DEPARTAMENTO"].ToString());
                 item.Id_Fornecedor = int.Parse(dt.Rows[i]["ID_FORNECEDOR"].ToString());
+                item.Valor = decimal.Parse(dt.Rows[i]["VALOR"].ToString());
                 item.Status = dt.Rows[i]["STATUS"].ToString();
                 item.Obs = dt.Rows[i]["OBS"].ToString();                
                 produtos.Add(item);
@@ -94,7 +97,7 @@ namespace AppArenaWeb.Models
         public ProdutoModel CarregarRegistro(int? Id) 
         {
             ProdutoModel item = new ProdutoModel();
-            string sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
+            string sql = $"SELECT ID, DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS FROM PRODUTO WHERE ID = '{Id}' ORDER BY DESCRICAO ASC";
             DAL objDAL = new DAL();
             DataTable dt = objDAL.RetDataTable(sql);
 
@@ -105,6 +108,7 @@ namespace AppArenaWeb.Models
             item.IdadeMaxima = int.Parse(dt.Rows[0]["IDADE_MAXIMA"].ToString());
             item.Id_Departamento = int.Parse(dt.Rows[0]["ID_DEPARTAMENTO"].ToString());
             item.Id_Fornecedor = int.Parse(dt.Rows[0]["ID_FORNECEDOR"].ToString());
+            item.Valor = decimal.Parse(dt.Rows[0]["VALOR"].ToString());
             item.Status = dt.Rows[0]["STATUS"].ToString();
             item.Obs = dt.Rows[0]["OBS"].ToString();
             return item;
@@ -112,15 +116,17 @@ namespace AppArenaWeb.Models
 
         public void Sql_Insert_update()
         {
-            string sql = "";
+                       
+            string sql = "";            
+            string vValor = Valor.ToString().Replace(',', '.');
 
             if (Id == 0)
             {
-                sql = $"INSERT INTO PRODUTO (DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, STATUS, OBS) VALUES ('{Descricao}', '{Dimensao}', '{IdadeMaxima}', '{Id_Departamento}', '{Id_Fornecedor}','{Status}','{Obs}');";
+                sql = $"INSERT INTO PRODUTO (DESCRICAO, DIMENSAO, IDADE_MAXIMA, ID_DEPARTAMENTO, ID_FORNECEDOR, VALOR, STATUS, OBS) VALUES ('{Descricao}', '{Dimensao}', '{IdadeMaxima}', '{Id_Departamento}', '{Id_Fornecedor}', '{Valor}', '{Status}','{Obs}');";
             }
             else
             {
-                sql = $"UPDATE CLIENTE SET DESCRICAO = '{Descricao}', DIMENSAO = '{Dimensao}', IDADE_MAXIMA = '{IdadeMaxima}', ID_DEPARTAMENTO = '{Id_Departamento}', ID_FORNECEDOR = '{Id_Fornecedor}', STATUS = '{Status}', OBS = '{Obs}'  WHERE ID = '{Id}'";
+                sql = $"UPDATE PRODUTO SET DESCRICAO = '{Descricao}', DIMENSAO = '{Dimensao}', IDADE_MAXIMA = '{IdadeMaxima}', ID_DEPARTAMENTO = '{Id_Departamento}', ID_FORNECEDOR = '{Id_Fornecedor}', VALOR = '{vValor}', STATUS = '{Status}', OBS = '{Obs}'  WHERE ID = '{Id}'";
             }
             DAL objDal = new DAL();
             objDal.ExecutarComandoSQL(sql);

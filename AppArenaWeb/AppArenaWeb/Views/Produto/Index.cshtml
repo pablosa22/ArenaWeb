@@ -8,6 +8,7 @@
     var vDescricao = "";
     var vDepartamento = "";
     var vDepartamento_Id = 0;
+    var vValor = 0.00;
 
     try
     {
@@ -15,6 +16,7 @@
         vDescricao = @ViewBag.ListaProdutos.Descricao.ToString();
         vDepartamento_Id = int.Parse(@ViewBag.ListaDepartamentos.Id.ToString());
         vDepartamento = @ViewBag.ListaDepartamentos.Descricao.ToString();
+        vValor = decimal.Parse(@ViewBag.ListaProdutos.Valor.ToString());
     }
     catch { }
 }
@@ -67,7 +69,8 @@
         <tr>
             <th>ID</th>
             <th>Descrição</th>
-            <th>CPF</th>
+            <th>Dep</th>
+            <th>Valor</th>
         </tr>
     </thead>
     @{
@@ -79,12 +82,13 @@
                 {
                     <tbody style="font-size: 12px;">
                         <tb>
-                            <tr>
-                                <td>@item.Id.ToString()</td>
-                                <td>@item.Descricao.ToString()</td>
-                                <td>@dep.Descricao.ToString()</td>
-                                <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarProduto(@item.Id.ToString())">Editar</button></td>
-                            </tr>
+                                <tr>
+                                    <td>@item.Id.ToString()</td>
+                                    <td>@item.Descricao.ToString()</td>
+                                    <td>@dep.Descricao.ToString()</td>
+                                    <td>@item.Valor.ToString()</td>
+                                    <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarProduto(@item.Id.ToString())">Editar</button></td>
+                                </tr>
                         </tb>
                     </tbody>
 

@@ -1,11 +1,14 @@
 ﻿@model AgendacModel
 
 @{ 
+
 ViewData["Title"] = "Index";
+
 }
 
 <h3>Pesquisar Agenda</h3>
 <br />
+
 @{
     var vId = 0;
     var vId_Cliente = 0;
@@ -34,7 +37,7 @@ ViewData["Title"] = "Index";
         </div>
         <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
             <label for="sel">Cód.Cli</label>
-            <input type="text" class="form-control" asp-for="Id_Clinte" value="@vId_Cliente">
+            <input type="text" class="form-control" asp-for="Id_Cliente" value="@vId_Cliente">
         </div>
         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <label for="sel">DtInicio</label>
@@ -57,7 +60,7 @@ ViewData["Title"] = "Index";
         </div>
         <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
             <br />
-            <button type="button" class="btn btn-block btn-success" onclick="Agendar()"><strong> + </strong>Novo</button>
+            <button type="button" class="btn btn-block btn-success" onclick="CadastrarFesta()"><strong> + </strong>Novo</button>
         </div>
     </div>
 </form>
@@ -82,7 +85,7 @@ ViewData["Title"] = "Index";
                         <td>@item.Cliente.ToString()</td>
                         <td>@item.DtInicial.ToString()</td>
                         <td>@item.DtFinal.ToString()</td>
-                        <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarCliente(@item.Id.ToString())">Editar</button></td>
+                        <td><button type="button" class="btn btn-warning btn-sm" onclick="EditarOS(@item.Id.ToString())">Editar</button></td>
                     </tr>
                 </tb>
             </tbody>
@@ -92,15 +95,11 @@ ViewData["Title"] = "Index";
 
 <script type="text/javascript" src="~/Scripts/jquery.mask.js"></script>
 <script>
-    function Agendar() {
-        window.location.href = "../Agenda/CadastrarFesta";
-    }
+    function CadastrarFesta() {        
+        window.location.href = "../Agenda/Agendar";
+    }  
 
-    function EditarCliente(Id) {
-        window.location.href = "../Cliente/CadastrarCliente/" + Id;
-    }
-
-    function Excluir(Id) {
-        window.location.href = "../PlanoConta/ExcluirPlanoConta/" + Id;
+    function EditarOS(Id) {
+        window.location.href = "../Agenda/Agendar/" + Id;
     }
 </script>
